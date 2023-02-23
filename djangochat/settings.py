@@ -12,6 +12,9 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 
 from pathlib import Path
 
+import sqlite3
+from django.db.backends.sqlite3 import base as sqlite3_base
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -78,6 +81,12 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
+    'CONN_MAX_AGE': 0,
+        'OPTIONS': {
+            'timeout': 60,
+            'detect_types': sqlite3.PARSE_DECLTYPES | sqlite3.PARSE_COLNAMES,
+            'factory': sqlite3_base.SQLite3Connection,
+        },
     }
 }
 
